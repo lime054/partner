@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج شحنة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            direction: rtl;
+            background-color: #2c3e50; /* لون خلفية غامق */
+            color: white;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #34495e; /* لون خلفية النموذج */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #ecf0f1; /* لون النص */
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #7f8c8d; /* لون الحدود */
+            border-radius: 4px;
+            background-color: #2c3e50; /* لون الخلفية الخاصة بالحقل */
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #25d366; /* WhatsApp color */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #128c7e;
+        }
+
+        .message {
+            font-size: 14px;
+            color: #ecf0f1;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .welcome-message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- إضافة رسالة ترحيبية -->
+    <div class="welcome-message">
+        مرحبًا في شركة بارتنر! <br> نحن هنا لخدمتك.
+    </div>
+
+    <!-- نموذج الشحنة -->
+    <form id="shipmentForm">
+        <h2>تفاصيل الشحنة</h2>
+
+        <label for="image">صورة الشحنة:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <label for="shipperName">اسم الشاحن:</label>
+        <input type="text" id="shipperName" name="shipperName" placeholder="أدخل اسم الشاحن" required>
+
+        <label for="fromLocation">من أين الشحنة؟:</label>
+        <input type="text" id="fromLocation" name="fromLocation" placeholder="أدخل مكان انطلاق الشحنة" required>
+
+        <label for="toLocation">إلى أين الشحنة؟:</label>
+        <input type="text" id="toLocation" name="toLocation" placeholder="أدخل وجهة الشحنة" required>
+
+        <button type="button" id="sendToWhatsApp">إرسال إلى WhatsApp</button>
+
+        <p class="message" id="message"></p>
+    </form>
+
+    <script>
+        document.getElementById('sendToWhatsApp').addEventListener('click', function() {
+            var shipperName = document.getElementById('shipperName').value;
+            var fromLocation = document.getElementById('fromLocation').value;
+            var toLocation = document.getElementById('toLocation').value;
+
+            // بناء نص الرسالة
+            var message = `تفاصيل الشحنة:\nاسم الشاحن: ${shipperName}\nمن: ${fromLocation}\nإلى: ${toLocation}`;
+
+            // رقم الهاتف الذي سيتم إرسال الرسالة إليه
+            var phoneNumber = '201551659001'; 
+
+            // إنشاء رابط WhatsApp
+            var whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            // التحقق من وجود بيانات
+            if (shipperName && fromLocation && toLocation) {
+                // فتح الرابط في WhatsApp
+                window.open(whatsappLink, '_blank');
+            } else {
+                // عرض رسالة تنبيه إذا كانت البيانات غير مكتملة
+                document.getElementById('message').textContent = 'يرجى ملء جميع الحقول.';
+                document.getElementById('message').style.color = 'red';
+            }
+        });
+    </script>
+
+</body>
+</html>
